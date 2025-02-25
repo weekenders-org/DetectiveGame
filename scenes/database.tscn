@@ -1,0 +1,151 @@
+[gd_scene load_steps=4 format=3 uid="uid://8j37uja2sd3h"]
+
+[ext_resource type="Script" path="res://scripts/database.gd" id="1_j36ws"]
+
+[sub_resource type="GDScript" id="GDScript_nd3jo"]
+script/source = "extends TextEdit
+
+@onready var searchButton: Button = $\"../Search\"
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.is_pressed():
+		var key: InputEventKey = event
+		if key.keycode == KEY_ENTER or key.keycode == KEY_KP_ENTER:
+			searchButton.pressed.emit() 	# start searching
+			accept_event() 					# consume the event
+"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mknqk"]
+
+[node name="Database" type="Control"]
+custom_minimum_size = Vector2(1000, 500)
+layout_mode = 3
+anchors_preset = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 1050.0
+offset_bottom = 550.0
+script = ExtResource("1_j36ws")
+
+[node name="DatavaseBackground" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="DatabaseTitle" type="Panel" parent="VBoxContainer/TitleContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TitleBar" type="Label" parent="VBoxContainer/TitleContainer/DatabaseTitle"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+text = "DATABASE WINDOW"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DatabaseClose" type="Button" parent="VBoxContainer/TitleContainer"]
+layout_mode = 2
+text = "✖"
+
+[node name="Seperator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_right = 12
+
+[node name="BodyContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="SearchContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer/BodyContainer"]
+layout_mode = 2
+
+[node name="SeatchText" type="TextEdit" parent="VBoxContainer/MarginContainer/BodyContainer/SearchContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Your search query here...."
+context_menu_enabled = false
+shortcut_keys_enabled = false
+selecting_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+scroll_fit_content_height = true
+caret_blink = true
+caret_multiple = false
+script = SubResource("GDScript_nd3jo")
+
+[node name="Search" type="Button" parent="VBoxContainer/MarginContainer/BodyContainer/SearchContainer"]
+layout_mode = 2
+text = " Search "
+
+[node name="ContentMargin" type="MarginContainer" parent="VBoxContainer/MarginContainer/BodyContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Content" type="ScrollContainer" parent="VBoxContainer/MarginContainer/BodyContainer/ContentMargin"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Results" type="FlowContainer" parent="VBoxContainer/MarginContainer/BodyContainer/ContentMargin/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+last_wrap_alignment = 1
+
+[node name="ImagePreview" type="Panel" parent="."]
+visible = false
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_mknqk")
+
+[node name="TitleContainer" type="HBoxContainer" parent="ImagePreview"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+alignment = 2
+
+[node name="ImageClose" type="Button" parent="ImagePreview/TitleContainer"]
+layout_mode = 2
+text = "✖"
+
+[connection signal="pressed" from="VBoxContainer/TitleContainer/DatabaseClose" to="." method="_on_database_close_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/BodyContainer/SearchContainer/Search" to="." method="_on_search_pressed"]
+[connection signal="pressed" from="ImagePreview/TitleContainer/ImageClose" to="." method="_on_image_close_pressed"]
