@@ -1,7 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://rs7bl6r422k8"]
+[gd_scene load_steps=3 format=3 uid="uid://rs7bl6r422k8"]
 
 [ext_resource type="PackedScene" uid="uid://8j37uja2sd3h" path="res://scenes/database.tscn" id="1_ttkst"]
+[ext_resource type="PackedScene" uid="uid://bqn6iownc7ai4" path="res://scenes/board.tscn" id="2_sfpmf"]
 
 [node name="Game" type="Node"]
 
 [node name="Database" parent="." instance=ExtResource("1_ttkst")]
+
+[node name="Board" parent="." instance=ExtResource("2_sfpmf")]
+visible = false
