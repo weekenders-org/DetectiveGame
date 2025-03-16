@@ -11,11 +11,17 @@ extends Control
 
 var image_paths = {}
 
+var debug: bool = OS.is_debug_build()
+
 func _ready() -> void:
 	if folder_path.is_empty():
 		push_error("Folder path is empty")
 		return
 	index_images()
+
+func _input(event: InputEvent) -> void:
+	if debug and (event.is_action_pressed("debug_board_show")):
+		show()
 
 # Pre-index images, only handles .png and .jpg atm
 func index_images() -> void:
@@ -36,9 +42,10 @@ func index_images() -> void:
 		if file_name.ends_with(".png") or file_name.ends_with(".jpg"):
 			var name_no_ext = file_name.get_basename().to_lower()
 			image_paths[name_no_ext] = folder_path + file_name
-			debug_img_paths.append(name_no_ext + " -> " + file_name)
+			if (debug):
+				debug_img_paths.append(name_no_ext + " -> " + file_name)
 		file_name = dir.get_next()
-	print(debug_img_paths)
+	print_debug(debug_img_paths)
 
 func search_image(search_name: String) -> String:
 	return image_paths.get(search_name.to_lower(), "")
@@ -52,7 +59,7 @@ func load_texture(image_name: String) -> Texture2D:
 	if tex is Texture2D:
 		return tex
 	
-	print(image_name + "not found.")
+	print_debug(image_name + "not found.")
 	return null
 
 func clear_search() -> void:

@@ -5,7 +5,7 @@
 
 [node name="Game" type="Node"]
 
-[node name="Database" parent="." instance=ExtResource("1_ttkst")]
-
 [node name="Board" parent="." instance=ExtResource("2_sfpmf")]
+
+[node name="Database" parent="." instance=ExtResource("1_ttkst")]
 visible = false

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://8j37uja2sd3h"]
 
-[ext_resource type="Script" path="res://scripts/database.gd" id="1_j36ws"]
+[ext_resource type="Script" uid="uid://b52lpxtd8in6d" path="res://scripts/database.gd" id="1_j36ws"]
 
 [sub_resource type="GDScript" id="GDScript_nd3jo"]
 script/source = "extends TextEdit
@@ -26,6 +26,7 @@ offset_top = 50.0
 offset_right = 1050.0
 offset_bottom = 550.0
 script = ExtResource("1_j36ws")
+folder_path = "res://assets/images/"
 
 [node name="DatavaseBackground" type="Panel" parent="."]
 layout_mode = 1

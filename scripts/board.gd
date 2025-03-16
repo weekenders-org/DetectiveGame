@@ -1,10 +1,11 @@
 extends Panel
 
-# Called when the node enters the scene tree for the first time.
+@export var pins : Array[Panel] = []
+
 func _ready() -> void:
-	pass # Replace with function body.
+	pins.clear()
+	for child in get_children(false):
+		if child is Panel:
+			pins.append(child)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	print_debug(pins)
