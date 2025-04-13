@@ -1,21 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://8j37uja2sd3h"]
+[gd_scene load_steps=5 format=3 uid="uid://8j37uja2sd3h"]
 
 [ext_resource type="Script" uid="uid://b52lpxtd8in6d" path="res://scripts/database.gd" id="1_j36ws"]
+[ext_resource type="Script" uid="uid://hosold73lgls" path="res://scripts/preview_popup.gd" id="2_7kj3n"]
 
-[sub_resource type="GDScript" id="GDScript_nd3jo"]
-script/source = "extends TextEdit
+[sub_resource type="LabelSettings" id="LabelSettings_s8xgl"]
+font_size = 30
 
-@onready var searchButton: Button = $\"../Search\"
-
-func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.is_pressed():
-		var key: InputEventKey = event
-		if key.keycode == KEY_ENTER or key.keycode == KEY_KP_ENTER:
-			searchButton.pressed.emit() 	# start searching
-			accept_event() 					# consume the event
-"
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mknqk"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_s8xgl"]
 
 [node name="Database" type="Control"]
 custom_minimum_size = Vector2(1000, 500)
@@ -26,7 +17,7 @@ offset_top = 50.0
 offset_right = 1050.0
 offset_bottom = 550.0
 script = ExtResource("1_j36ws")
-folder_path = "res://assets/images/"
+supported_formats = PackedStringArray(".png", ".jpg", ".webp")
 
 [node name="DatavaseBackground" type="Panel" parent="."]
 layout_mode = 1
@@ -83,7 +74,8 @@ layout_mode = 2
 [node name="SearchContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer/BodyContainer"]
 layout_mode = 2
 
-[node name="SeatchText" type="TextEdit" parent="VBoxContainer/MarginContainer/BodyContainer/SearchContainer"]
+[node name="SearchInput" type="TextEdit" parent="VBoxContainer/MarginContainer/BodyContainer/SearchContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Your search query here...."
@@ -97,11 +89,6 @@ middle_mouse_paste_enabled = false
 scroll_fit_content_height = true
 caret_blink = true
 caret_multiple = false
-script = SubResource("GDScript_nd3jo")
-
-[node name="Search" type="Button" parent="VBoxContainer/MarginContainer/BodyContainer/SearchContainer"]
-layout_mode = 2
-text = " Search "
 
 [node name="ContentMargin" type="MarginContainer" parent="VBoxContainer/MarginContainer/BodyContainer"]
 layout_mode = 2
@@ -116,13 +103,32 @@ layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="Results" type="FlowContainer" parent="VBoxContainer/MarginContainer/BodyContainer/ContentMargin/Content"]
+[node name="ResultsContainer" type="FlowContainer" parent="VBoxContainer/MarginContainer/BodyContainer/ContentMargin/Content"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 last_wrap_alignment = 1
 
-[node name="ImagePreview" type="Panel" parent="."]
+[node name="LoadingOverlay" type="Control" parent="VBoxContainer/MarginContainer/BodyContainer/ContentMargin"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="LoadingLabel" type="Label" parent="VBoxContainer/MarginContainer/BodyContainer/ContentMargin/LoadingOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "LOADING ..."
+label_settings = SubResource("LabelSettings_s8xgl")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PreviewPopup" type="Panel" parent="."]
+unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 1
@@ -131,38 +137,67 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_mknqk")
+script = ExtResource("2_7kj3n")
 
-[node name="TitleContainer" type="HBoxContainer" parent="ImagePreview"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PreviewPopup"]
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 15
 anchor_right = 1.0
-offset_bottom = 31.0
+anchor_bottom = 1.0
 grow_horizontal = 2
-alignment = 2
+grow_vertical = 2
 
-[node name="ImageClose" type="Button" parent="ImagePreview/TitleContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PreviewPopup/VBoxContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="PreviewPopup/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TitleLabel" type="Label" parent="PreviewPopup/VBoxContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "PreviewTitle"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="PreviewPopup/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "✖"
 
-[node name="NotFoundLabel" type="Label" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.5
-offset_top = -11.5
-offset_right = 50.5
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "NOT FOUND"
+[node name="MarginContainer" type="MarginContainer" parent="PreviewPopup/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="PreviewTexture" type="TextureRect" parent="PreviewPopup/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = SubResource("PlaceholderTexture2D_s8xgl")
+expand_mode = 1
+
+[node name="TagsContainer" type="HBoxContainer" parent="PreviewPopup/VBoxContainer"]
+layout_mode = 2
+
+[node name="Description" type="Label" parent="PreviewPopup/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Desc"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="VBoxContainer/TitleContainer/DatabaseClose" to="." method="_on_database_close_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/BodyContainer/SearchContainer/Search" to="." method="_on_search_pressed"]
-[connection signal="pressed" from="ImagePreview/TitleContainer/ImageClose" to="." method="_on_image_close_pressed"]
+[connection signal="pressed" from="PreviewPopup/VBoxContainer/HBoxContainer/CloseButton" to="PreviewPopup" method="_on_close_button_pressed"]

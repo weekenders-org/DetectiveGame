@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://casnxokfo1yyr"]
+
+[ext_resource type="Script" uid="uid://vp58832y0cnm" path="res://scripts/twine_connection.gd" id="1_t0vb1"]
+
+[node name="TwineConnection" type="Line2D"]
+script = ExtResource("1_t0vb1")

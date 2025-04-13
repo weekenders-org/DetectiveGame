@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqn6iownc7ai4"]
+
+[ext_resource type="Script" uid="uid://cl6k0p78r4afy" path="res://scripts/board.gd" id="1_sj3vb"]
+
+[sub_resource type="Gradient" id="Gradient_tx6nw"]
+colors = PackedColorArray(0.273873, 0.273873, 0.273873, 1, 0.27451, 0.27451, 0.27451, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nglv8"]
+gradient = SubResource("Gradient_tx6nw")
+
+[node name="Board" type="Node2D"]
+script = ExtResource("1_sj3vb")
+
+[node name="NotesLayer" type="Node2D" parent="."]
+
+[node name="Connections" type="Node2D" parent="."]
+
+[node name="TwineConnection1" type="Line2D" parent="Connections"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(569, 330.5)
+scale = Vector2(5.44531, 807)
+texture = SubResource("GradientTexture1D_nglv8")

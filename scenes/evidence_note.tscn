@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://xoomn7aq7jmg"]
+
+[ext_resource type="Script" uid="uid://5wm11fqfjmp6" path="res://scripts/evidence_note.gd" id="1_0l4x7"]
+[ext_resource type="Texture2D" uid="uid://dx5x4f50p0rm2" path="res://assets/thumb_tac.png" id="2_x3xov"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_x3xov"]
+
+[node name="EvidenceNote" type="Panel"]
+custom_minimum_size = Vector2(200, 200)
+script = ExtResource("1_0l4x7")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Content" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+texture = SubResource("PlaceholderTexture2D_x3xov")
+expand_mode = 1
+
+[node name="Pin" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+texture_normal = ExtResource("2_x3xov")
+ignore_texture_size = true
+stretch_mode = 0

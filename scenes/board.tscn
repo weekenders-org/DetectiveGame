@@ -1,13 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bqn6iownc7ai4"]
+[gd_scene load_steps=4 format=3 uid="uid://cv1rurq4ybr8"]
 
-[ext_resource type="Script" uid="uid://cl6k0p78r4afy" path="res://scripts/board.gd" id="1_sj3vb"]
-[ext_resource type="Texture2D" uid="uid://dexgrd3o2xk8q" path="res://assets/images/1342.png" id="2_jv3fs"]
-[ext_resource type="Script" uid="uid://xiehebijvgeq" path="res://scenes/image_pin.gd" id="2_wb26c"]
-[ext_resource type="Texture2D" uid="uid://dx5x4f50p0rm2" path="res://assets/thumb_tac.png" id="3_3ymf1"]
-[ext_resource type="Texture2D" uid="uid://bit3qyc1al8o0" path="res://assets/images/random.jpg" id="5_dxjtj"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xid7b"]
-bg_color = Color(0.641934, 0.641934, 0.641934, 1)
+[ext_resource type="Script" uid="uid://cl6k0p78r4afy" path="res://scripts/board.gd" id="1_bw3vb"]
+[ext_resource type="PackedScene" uid="uid://xoomn7aq7jmg" path="res://scenes/evidence_note.tscn" id="2_tx6nw"]
+[ext_resource type="PackedScene" uid="uid://casnxokfo1yyr" path="res://scenes/twine_connection.tscn" id="3_nglv8"]
 
 [node name="Board" type="Panel"]
 anchors_preset = 15
@@ -15,81 +10,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_sj3vb")
+script = ExtResource("1_bw3vb")
+note_scene = ExtResource("2_tx6nw")
+connection_scene = ExtResource("3_nglv8")
 
-[node name="ImagePin" type="Panel" parent="."]
-custom_minimum_size = Vector2(150, 150)
-layout_mode = 0
-offset_left = 238.0
-offset_top = 138.0
-offset_right = 388.0
-offset_bottom = 288.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_xid7b")
-script = ExtResource("2_wb26c")
+[node name="NotesLayer" type="Node2D" parent="."]
 
-[node name="MarginContainer" type="MarginContainer" parent="ImagePin"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="Image" type="TextureRect" parent="ImagePin/MarginContainer"]
-layout_mode = 2
-texture = ExtResource("2_jv3fs")
-expand_mode = 1
-
-[node name="Pin" type="TextureRect" parent="ImagePin"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.4
-anchor_top = -0.1
-anchor_right = 0.6
-anchor_bottom = 0.1
-grow_horizontal = 2
-texture = ExtResource("3_3ymf1")
-expand_mode = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="ImagePin2" type="Panel" parent="."]
-custom_minimum_size = Vector2(150, 150)
-offset_left = 476.0
-offset_top = 276.0
-offset_right = 626.0
-offset_bottom = 426.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_xid7b")
-script = ExtResource("2_wb26c")
-
-[node name="MarginContainer" type="MarginContainer" parent="ImagePin2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="Image" type="TextureRect" parent="ImagePin2/MarginContainer"]
-layout_mode = 2
-texture = ExtResource("5_dxjtj")
-expand_mode = 1
-
-[node name="Pin" type="TextureRect" parent="ImagePin2"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.4
-anchor_top = -0.1
-anchor_right = 0.6
-anchor_bottom = 0.1
-grow_horizontal = 2
-texture = ExtResource("3_3ymf1")
-expand_mode = 1
-metadata/_edit_use_anchors_ = true
+[node name="ConnectionsLayer" type="Node2D" parent="."]
